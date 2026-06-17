@@ -29,6 +29,7 @@ jobs:
           KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
           GITHUB_USERNAME: ${{ secrets.GITHUB_USERNAME }}
+          PUBLIC_DATA_API_KEY: ${{ secrets.PUBLIC_DATA_API_KEY }}
         run: python news_briefing.py
 
       - name: GitHub Pages 업로드
