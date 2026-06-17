@@ -9,9 +9,9 @@ from urllib.parse import quote
 # 뉴스 주제 설정 (여기만 바꾸면 됩니다!)
 # ==========================================
 NEWS_TOPICS = [
-    "AI 인공지능",
-    "법무부",
-    "디지털정부"
+    "교도소",
+    "구치소",
+    "수원구치소"
 ]
 # ==========================================
 
@@ -34,7 +34,7 @@ def refresh_access_token():
     }
     response = requests.post(url, data=data)
     result = response.json()
-    print(f"토큰 갱신 완료")
+    print("토큰 갱신 완료")
     return result.get("access_token")
 
 
@@ -44,6 +44,8 @@ def get_all_news(topic):
     end_dt = now.replace(hour=7, minute=0, second=0, microsecond=0)
     start_dt = end_dt - timedelta(days=1)
 
+    print(f"  수집 범위: {start_dt.strftime('%m/%d %H:%M')} ~ {end_dt.strftime('%m/%d %H:%M')}")
+
     url = "https://openapi.naver.com/v1/search/news.json"
     headers = {
         "X-Naver-Client-Id": NAVER_CLIENT_ID,
@@ -52,6 +54,7 @@ def get_all_news(topic):
 
     all_items = []
     start = 1
+    parse_fail = 0
 
     while True:
         params = {
@@ -65,6 +68,7 @@ def get_all_news(topic):
         items = data.get("items", [])
 
         if not items:
+            print(f"  더 이상 기사 없음 (start={start})")
             break
 
         stop = False
@@ -72,20 +76,16 @@ def get_all_news(topic):
             pub_date_str = item.get("pubDate", "")
             try:
                 pub_dt = datetime.strptime(pub_date_str, "%a, %d %b %Y %H:%M:%S %z").astimezone(KST)
-            except Exception:
-                # 파싱 실패시 포함
-                all_items.append({
-                    "title": clean_text(item.get("title", "")),
-                    "link": item.get("originallink") or item.get("link", ""),
-                    "pub_date": "??:??",
-                    "description": clean_text(item.get("description", ""))
-                })
+            except Exception as e:
+                parse_fail += 1
+                if parse_fail <= 3:
+                    print(f"  날짜 파싱 실패: '{pub_date_str}' → {e}")
                 continue
 
             if pub_dt < start_dt:
                 stop = True
                 break
-            if pub_dt <= end_dt:
+            if start_dt <= pub_dt <= end_dt:
                 all_items.append({
                     "title": clean_text(item.get("title", "")),
                     "link": item.get("originallink") or item.get("link", ""),
@@ -97,8 +97,13 @@ def get_all_news(topic):
             break
 
         start += 100
-        if start > min(data.get("total", 0), 1000):
+        total = data.get("total", 0)
+        if start > min(total, 1000):
+            print(f"  전체 {total}건 수집 완료")
             break
+
+    if parse_fail > 0:
+        print(f"  날짜 파싱 실패 총 {parse_fail}건")
 
     return all_items
 
@@ -117,15 +122,15 @@ def generate_html(topic_news):
     sections = ""
     for topic, items in topic_news.items():
         if not items:
-            rows = "<tr><td colspan='3' style='text-align:center;color:#888;padding:20px;'>해당 시간대 기사 없음</td></tr>"
+            rows = "<tr><td colspan='2' style='text-align:center;color:#888;padding:20px;'>해당 시간대 기사 없음</td></tr>"
         else:
             rows = ""
             for item in items:
                 rows += f"""
                 <tr>
-                    <td style='color:#888;font-size:12px;white-space:nowrap;padding:8px 12px;'>{item['pub_date']}</td>
+                    <td style='color:#aaa;font-size:11px;white-space:nowrap;padding:8px 12px;vertical-align:top;'>{item['pub_date']}</td>
                     <td style='padding:8px 12px;'>
-                        <a href='{item['link']}' target='_blank' style='color:#1a1a1a;text-decoration:none;line-height:1.5;'>
+                        <a href='{item['link']}' target='_blank' style='color:#1a1a1a;text-decoration:none;line-height:1.6;font-size:14px;'>
                             {item['title']}
                         </a>
                     </td>
@@ -134,7 +139,7 @@ def generate_html(topic_news):
         sections += f"""
         <div class='section'>
             <div class='section-header'>
-                <span class='topic-tag'>{topic}</span>
+                <span class='topic-tag'># {topic}</span>
                 <span class='count'>{len(items)}건</span>
             </div>
             <table width='100%' cellspacing='0' cellpadding='0'>
@@ -150,40 +155,39 @@ def generate_html(topic_news):
     <title>성민이가 전달하는 뉴스 소식 - {date_str}</title>
     <style>
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f6f8; color: #1a1a1a; }}
-        .header {{ background: linear-gradient(135deg, #3d5af1, #7b2ff7); color: white; padding: 28px 20px; text-align: center; }}
-        .header h1 {{ font-size: 20px; font-weight: 700; margin-bottom: 6px; }}
-        .header p {{ font-size: 13px; opacity: 0.85; }}
-        .badge {{ display: inline-block; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 4px 14px; font-size: 12px; margin-top: 10px; }}
+        body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f6f8; }}
+        .header {{ background: linear-gradient(135deg, #3d5af1, #7b2ff7); color: white; padding: 32px 20px; text-align: center; }}
+        .header h1 {{ font-size: 22px; font-weight: 800; margin-bottom: 8px; }}
+        .header p {{ font-size: 13px; opacity: 0.8; margin-bottom: 12px; }}
+        .badge {{ display: inline-block; background: rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 16px; font-size: 13px; font-weight: 600; }}
         .container {{ max-width: 720px; margin: 0 auto; padding: 16px; }}
-        .section {{ background: white; border-radius: 12px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }}
-        .section-header {{ display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }}
-        .topic-tag {{ font-size: 15px; font-weight: 700; color: #3d5af1; }}
-        .count {{ font-size: 12px; color: #888; background: #f0f0f0; border-radius: 10px; padding: 2px 10px; }}
+        .section {{ background: white; border-radius: 14px; margin-bottom: 16px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }}
+        .section-header {{ display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #fafafa; border-bottom: 1px solid #f0f0f0; }}
+        .topic-tag {{ font-size: 14px; font-weight: 700; color: #3d5af1; }}
+        .count {{ font-size: 12px; color: #fff; background: #3d5af1; border-radius: 10px; padding: 2px 10px; }}
         table {{ border-collapse: collapse; width: 100%; }}
-        tr {{ border-bottom: 1px solid #f5f5f5; }}
+        tr {{ border-bottom: 1px solid #f5f5f5; transition: background 0.1s; }}
         tr:last-child {{ border-bottom: none; }}
-        tr:hover {{ background: #fafafa; }}
-        a:hover {{ color: #3d5af1 !important; text-decoration: underline !important; }}
-        .footer {{ text-align: center; padding: 20px; color: #aaa; font-size: 12px; }}
+        tr:hover {{ background: #f8f9ff; }}
+        a:hover {{ color: #3d5af1 !important; }}
+        .footer {{ text-align: center; padding: 24px; color: #bbb; font-size: 12px; }}
     </style>
 </head>
 <body>
     <div class='header'>
         <h1>📰 성민이가 전달하는 뉴스 소식!</h1>
-        <p>{date_str} · 전일 07:00 ~ 당일 07:00</p>
+        <p>{date_str} &nbsp;·&nbsp; 전일 07:00 ~ 당일 07:00</p>
         <div class='badge'>총 {total}건</div>
     </div>
     <div class='container'>
         {sections}
-        <div class='footer'>법무부 AI TF · 자동 생성된 뉴스 브리핑</div>
+        <div class='footer'>⚡ 법무부 AI TF · 매일 07:00 자동 업데이트</div>
     </div>
 </body>
 </html>"""
 
 
 def send_kakao_text(access_token, topic_news, page_url):
-    """텍스트로 요약 + 링크 전송"""
     url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
     headers = {"Authorization": f"Bearer {access_token}"}
 
@@ -191,14 +195,20 @@ def send_kakao_text(access_token, topic_news, page_url):
     date_str = now.strftime("%Y.%m.%d")
     total = sum(len(v) for v in topic_news.values())
 
-    msg = f"📰 성민이가 전달하는 뉴스 소식!\n"
-    msg += f"{date_str} 07:00 기준\n"
-    msg += "─" * 20 + "\n"
+    lines = []
+    lines.append("━" * 22)
+    lines.append("📰 오늘의 뉴스 브리핑")
+    lines.append(f"📅 {date_str}  07:00 기준")
+    lines.append("━" * 22)
     for topic, items in topic_news.items():
-        msg += f"📌 {topic}: {len(items)}건\n"
-    msg += "─" * 20 + "\n"
-    msg += f"총 {total}건\n\n"
-    msg += f"👉 {page_url}"
+        lines.append(f"🔹 {topic}  {len(items)}건")
+    lines.append("━" * 22)
+    lines.append(f"📊 총 {total}건")
+    lines.append("")
+    lines.append("👇 전체 기사 보기")
+    lines.append(page_url)
+
+    msg = "\n".join(lines)
 
     template = {
         "object_type": "text",
@@ -223,15 +233,15 @@ def main():
 
     topic_news = {}
     for topic in NEWS_TOPICS:
-        print(f"【{topic}】 뉴스 수집 중...")
+        print(f"\n【{topic}】 뉴스 수집 중...")
         items = get_all_news(topic)
         topic_news[topic] = items
-        print(f"  → {len(items)}건 수집")
+        print(f"  → 최종 {len(items)}건")
 
     html = generate_html(topic_news)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print("HTML 생성 완료!")
+    print("\nHTML 생성 완료!")
 
     page_url = "https://tjdals7843-byte.github.io/news-briefing/"
     status, result = send_kakao_text(access_token, topic_news, page_url)
