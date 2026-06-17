@@ -239,8 +239,7 @@ def main():
     print("HTML 생성 완료!")
 
     # 4. 카카오톡 전송
-    github_username = os.environ.get("GITHUB_USERNAME", "")
-    page_url = f"https://{github_username}.github.io/news-briefing/"
+    page_url = "https://tjdals7843-byte.github.io/news-briefing/"
     status, result = send_kakao_summary(access_token, topic_news, page_url)
     if status == 200:
         print("카카오톡 전송 완료!")
