@@ -3,7 +3,6 @@ import os
 import json
 import re
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote
 
 # ==========================================
 # 뉴스 주제 설정 (여기만 바꾸면 됩니다!)
@@ -39,12 +38,9 @@ def refresh_access_token():
 
 
 def get_all_news(topic):
-    """전날 07:00 ~ 당일 07:00 기사 전부 수집"""
     now = datetime.now(KST)
     end_dt = now.replace(hour=7, minute=0, second=0, microsecond=0)
     start_dt = end_dt - timedelta(days=1)
-
-    print(f"  수집 범위: {start_dt.strftime('%m/%d %H:%M')} ~ {end_dt.strftime('%m/%d %H:%M')}")
 
     url = "https://openapi.naver.com/v1/search/news.json"
     headers = {
@@ -54,7 +50,6 @@ def get_all_news(topic):
 
     all_items = []
     start = 1
-    parse_fail = 0
 
     while True:
         params = {
@@ -68,7 +63,6 @@ def get_all_news(topic):
         items = data.get("items", [])
 
         if not items:
-            print(f"  더 이상 기사 없음 (start={start})")
             break
 
         stop = False
@@ -76,10 +70,7 @@ def get_all_news(topic):
             pub_date_str = item.get("pubDate", "")
             try:
                 pub_dt = datetime.strptime(pub_date_str, "%a, %d %b %Y %H:%M:%S %z").astimezone(KST)
-            except Exception as e:
-                parse_fail += 1
-                if parse_fail <= 3:
-                    print(f"  날짜 파싱 실패: '{pub_date_str}' → {e}")
+            except Exception:
                 continue
 
             if pub_dt < start_dt:
@@ -90,20 +81,14 @@ def get_all_news(topic):
                     "title": clean_text(item.get("title", "")),
                     "link": item.get("originallink") or item.get("link", ""),
                     "pub_date": pub_dt.strftime("%H:%M"),
-                    "description": clean_text(item.get("description", ""))
                 })
 
         if stop:
             break
 
         start += 100
-        total = data.get("total", 0)
-        if start > min(total, 1000):
-            print(f"  전체 {total}건 수집 완료")
+        if start > min(data.get("total", 0), 1000):
             break
-
-    if parse_fail > 0:
-        print(f"  날짜 파싱 실패 총 {parse_fail}건")
 
     return all_items
 
@@ -166,7 +151,7 @@ def generate_html(topic_news):
         .topic-tag {{ font-size: 14px; font-weight: 700; color: #3d5af1; }}
         .count {{ font-size: 12px; color: #fff; background: #3d5af1; border-radius: 10px; padding: 2px 10px; }}
         table {{ border-collapse: collapse; width: 100%; }}
-        tr {{ border-bottom: 1px solid #f5f5f5; transition: background 0.1s; }}
+        tr {{ border-bottom: 1px solid #f5f5f5; }}
         tr:last-child {{ border-bottom: none; }}
         tr:hover {{ background: #f8f9ff; }}
         a:hover {{ color: #3d5af1 !important; }}
@@ -195,18 +180,24 @@ def send_kakao_text(access_token, topic_news, page_url):
     date_str = now.strftime("%Y.%m.%d")
     total = sum(len(v) for v in topic_news.values())
 
-    lines = []
-    lines.append("━" * 22)
-    lines.append("📰 오늘의 뉴스 브리핑")
-    lines.append(f"📅 {date_str}  07:00 기준")
-    lines.append("━" * 22)
+    lines = [
+        "┌───────────────────────┐",
+        "   📰 오늘의 뉴스 브리핑",
+        f"   📅 {date_str}  07:00 기준",
+        "└───────────────────────┘",
+        "",
+    ]
     for topic, items in topic_news.items():
-        lines.append(f"🔹 {topic}  {len(items)}건")
-    lines.append("━" * 22)
-    lines.append(f"📊 총 {total}건")
-    lines.append("")
-    lines.append("👇 전체 기사 보기")
-    lines.append(page_url)
+        lines.append(f"  🔸 {topic:<10} {len(items)}건")
+    lines += [
+        "",
+        f"  📊 총 {total}건",
+        "",
+        "─" * 25,
+        "  👇 전체 기사 보기",
+        f"  {page_url}",
+        "─" * 25,
+    ]
 
     msg = "\n".join(lines)
 
@@ -233,15 +224,15 @@ def main():
 
     topic_news = {}
     for topic in NEWS_TOPICS:
-        print(f"\n【{topic}】 뉴스 수집 중...")
+        print(f"【{topic}】 뉴스 수집 중...")
         items = get_all_news(topic)
         topic_news[topic] = items
-        print(f"  → 최종 {len(items)}건")
+        print(f"  → {len(items)}건")
 
     html = generate_html(topic_news)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
-    print("\nHTML 생성 완료!")
+    print("HTML 생성 완료!")
 
     page_url = "https://tjdals7843-byte.github.io/news-briefing/"
     status, result = send_kakao_text(access_token, topic_news, page_url)
