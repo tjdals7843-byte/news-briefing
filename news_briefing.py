@@ -67,15 +67,24 @@ def get_all_news(topic):
         if not items:
             break
 
+        stop = False
         for item in items:
             pub_date_str = item.get("pubDate", "")
             try:
                 pub_dt = datetime.strptime(pub_date_str, "%a, %d %b %Y %H:%M:%S %z").astimezone(KST)
-            except:
+            except Exception:
+                # 파싱 실패시 포함
+                all_items.append({
+                    "title": clean_text(item.get("title", "")),
+                    "link": item.get("originallink") or item.get("link", ""),
+                    "pub_date": "??:??",
+                    "description": clean_text(item.get("description", ""))
+                })
                 continue
 
             if pub_dt < start_dt:
-                return all_items  # 시간 범위 벗어나면 중단
+                stop = True
+                break
             if pub_dt <= end_dt:
                 all_items.append({
                     "title": clean_text(item.get("title", "")),
@@ -84,8 +93,11 @@ def get_all_news(topic):
                     "description": clean_text(item.get("description", ""))
                 })
 
+        if stop:
+            break
+
         start += 100
-        if start > data.get("total", 0):
+        if start > min(data.get("total", 0), 1000):
             break
 
     return all_items
@@ -98,12 +110,10 @@ def clean_text(text):
 
 
 def generate_html(topic_news):
-    """뉴스 모아보기 HTML 페이지 생성"""
     now = datetime.now(KST)
     date_str = now.strftime("%Y년 %m월 %d일")
     total = sum(len(v) for v in topic_news.values())
 
-    # 주제별 섹션 생성
     sections = ""
     for topic, items in topic_news.items():
         if not items:
@@ -132,7 +142,7 @@ def generate_html(topic_news):
             </table>
         </div>"""
 
-    html = f"""<!DOCTYPE html>
+    return f"""<!DOCTYPE html>
 <html lang='ko'>
 <head>
     <meta charset='UTF-8'>
@@ -150,7 +160,7 @@ def generate_html(topic_news):
         .section-header {{ display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; border-bottom: 1px solid #f0f0f0; }}
         .topic-tag {{ font-size: 15px; font-weight: 700; color: #3d5af1; }}
         .count {{ font-size: 12px; color: #888; background: #f0f0f0; border-radius: 10px; padding: 2px 10px; }}
-        table {{ border-collapse: collapse; }}
+        table {{ border-collapse: collapse; width: 100%; }}
         tr {{ border-bottom: 1px solid #f5f5f5; }}
         tr:last-child {{ border-bottom: none; }}
         tr:hover {{ background: #fafafa; }}
@@ -170,11 +180,10 @@ def generate_html(topic_news):
     </div>
 </body>
 </html>"""
-    return html
 
 
-def send_kakao_summary(access_token, topic_news, page_url):
-    """카카오톡으로 요약 + 링크 전송"""
+def send_kakao_text(access_token, topic_news, page_url):
+    """텍스트로 요약 + 링크 전송"""
     url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
     headers = {"Authorization": f"Bearer {access_token}"}
 
@@ -182,33 +191,22 @@ def send_kakao_summary(access_token, topic_news, page_url):
     date_str = now.strftime("%Y.%m.%d")
     total = sum(len(v) for v in topic_news.values())
 
-    summary = f"📰 성민이가 전달하는 뉴스 소식!\n"
-    summary += f"{date_str} 07:00 기준\n"
-    summary += "─" * 20 + "\n"
+    msg = f"📰 성민이가 전달하는 뉴스 소식!\n"
+    msg += f"{date_str} 07:00 기준\n"
+    msg += "─" * 20 + "\n"
     for topic, items in topic_news.items():
-        summary += f"📌 {topic}: {len(items)}건\n"
-    summary += "─" * 20 + "\n"
-    summary += f"총 {total}건"
+        msg += f"📌 {topic}: {len(items)}건\n"
+    msg += "─" * 20 + "\n"
+    msg += f"총 {total}건\n\n"
+    msg += f"👉 {page_url}"
 
     template = {
-        "object_type": "feed",
-        "content": {
-            "title": "📰 성민이가 전달하는 뉴스 소식!",
-            "description": summary,
-            "link": {
-                "web_url": page_url,
-                "mobile_web_url": page_url
-            }
-        },
-        "buttons": [
-            {
-                "title": "뉴스 모아보기",
-                "link": {
-                    "web_url": page_url,
-                    "mobile_web_url": page_url
-                }
-            }
-        ]
+        "object_type": "text",
+        "text": msg,
+        "link": {
+            "web_url": page_url,
+            "mobile_web_url": page_url
+        }
     }
 
     data = {"template_object": json.dumps(template, ensure_ascii=False)}
@@ -217,14 +215,12 @@ def send_kakao_summary(access_token, topic_news, page_url):
 
 
 def main():
-    # 1. Access Token 갱신
     print("Access Token 갱신 중...")
     access_token = refresh_access_token()
     if not access_token:
         print("토큰 갱신 실패!")
         return
 
-    # 2. 주제별 뉴스 수집
     topic_news = {}
     for topic in NEWS_TOPICS:
         print(f"【{topic}】 뉴스 수집 중...")
@@ -232,15 +228,13 @@ def main():
         topic_news[topic] = items
         print(f"  → {len(items)}건 수집")
 
-    # 3. HTML 생성 및 저장
     html = generate_html(topic_news)
     with open("index.html", "w", encoding="utf-8") as f:
         f.write(html)
     print("HTML 생성 완료!")
 
-    # 4. 카카오톡 전송
     page_url = "https://tjdals7843-byte.github.io/news-briefing/"
-    status, result = send_kakao_summary(access_token, topic_news, page_url)
+    status, result = send_kakao_text(access_token, topic_news, page_url)
     if status == 200:
         print("카카오톡 전송 완료!")
     else:
