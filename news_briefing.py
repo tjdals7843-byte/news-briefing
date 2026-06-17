@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import re
+from urllib.parse import quote
 
 # ==========================================
 # 뉴스 주제 설정 (여기만 바꾸면 됩니다!)
@@ -31,12 +32,12 @@ def refresh_access_token():
     }
     response = requests.post(url, data=data)
     result = response.json()
-    print(f"토큰 갱신 결과: {result.get('access_token', '실패')[:20]}...")
+    print(f"토큰 갱신 완료")
     return result.get("access_token")
 
 
 def get_news(topic):
-    """네이버 뉴스 API로 최신 뉴스 5개 검색"""
+    """네이버 뉴스 API로 최신 뉴스 검색"""
     url = "https://openapi.naver.com/v1/search/news.json"
     headers = {
         "X-Naver-Client-Id": NAVER_CLIENT_ID,
@@ -44,16 +45,31 @@ def get_news(topic):
     }
     params = {
         "query": topic,
-        "display": 5,
+        "display": 3,
         "sort": "date"
     }
     response = requests.get(url, headers=headers, params=params)
     return response.json().get("items", [])
 
 
+def get_thumbnail(article_url):
+    """기사 URL에서 og:image 썸네일 추출"""
+    try:
+        headers = {"User-Agent": "Mozilla/5.0"}
+        resp = requests.get(article_url, headers=headers, timeout=5)
+        og_image = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](https?://[^"\']+)["\']', resp.text)
+        if og_image:
+            return og_image.group(1)
+    except:
+        pass
+    return None
+
+
 def clean_text(text):
     """HTML 태그 제거"""
-    return re.sub(r'<[^>]+>', '', text).replace('&quot;', '"').replace('&amp;', '&').replace('&lt;', '<').replace('&gt;', '>').strip()
+    return re.sub(r'<[^>]+>', '', text)\
+        .replace('&quot;', '"').replace('&amp;', '&')\
+        .replace('&lt;', '<').replace('&gt;', '>').strip()
 
 
 def send_kakao_list(access_token, topic, items):
@@ -61,34 +77,47 @@ def send_kakao_list(access_token, topic, items):
     url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
     headers = {"Authorization": f"Bearer {access_token}"}
 
-    # 기사 목록 구성 (최대 5개)
     contents = []
-    for item in items[:5]:
+    for item in items[:3]:
         title = clean_text(item['title'])
         link = item.get('originallink') or item.get('link', 'https://news.naver.com')
-        contents.append({
+
+        # 썸네일 이미지 추출 시도
+        thumbnail = get_thumbnail(link)
+
+        content = {
             "title": title,
-            "description": "",
+            "description": " ",
             "link": {
                 "web_url": link,
                 "mobile_web_url": link
             }
-        })
+        }
+
+        # 이미지 있으면 추가
+        if thumbnail:
+            content["image_url"] = thumbnail
+            content["image_width"] = 200
+            content["image_height"] = 200
+
+        contents.append(content)
+
+    naver_search_url = f"https://search.naver.com/search.naver?where=news&query={quote(topic)}"
 
     template = {
         "object_type": "list",
         "header_title": "성민이가 전달하는 뉴스 소식!",
         "header_link": {
-            "web_url": "https://news.naver.com",
-            "mobile_web_url": "https://news.naver.com"
+            "web_url": naver_search_url,
+            "mobile_web_url": naver_search_url
         },
         "contents": contents,
         "buttons": [
             {
-                "title": f"【{topic}】 뉴스 전체보기",
+                "title": f"【{topic}】 뉴스 더보기",
                 "link": {
-                    "web_url": f"https://search.naver.com/search.naver?where=news&query={requests.utils.quote(topic)}",
-                    "mobile_web_url": f"https://search.naver.com/search.naver?where=news&query={requests.utils.quote(topic)}"
+                    "web_url": naver_search_url,
+                    "mobile_web_url": naver_search_url
                 }
             }
         ]
