@@ -9,8 +9,8 @@ from datetime import datetime, timedelta, timezone
 # ==========================================
 CHANNELS = [
     {
-        "name": "채널1",
-        "topics": ["교도소", "교정청", "교정"]
+        "name": "교위 서원진의 채널",
+        "topics": ["교도소", "교정청", "교도관", "교정본부"]
     },
     {
         "name": "채널2",
