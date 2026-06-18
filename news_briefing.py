@@ -3,15 +3,19 @@ import os
 import json
 import re
 from datetime import datetime, timedelta, timezone
-from urllib.parse import quote
 
 # ==========================================
-# 뉴스 주제 설정 (여기만 바꾸면 됩니다!)
+# 채널 설정 (여기만 바꾸면 됩니다!)
 # ==========================================
-NEWS_TOPICS = [
-    "법무부",
-    "정책기획단",
-    "램가"
+CHANNELS = [
+    {
+        "name": "채널1",
+        "topics": ["교도소", "교정청", "교도관", "교정본부"]
+    },
+    {
+        "name": "채널2",
+        "topics": ["황민지", "교정청", "교정"]
+    },
 ]
 # ==========================================
 
@@ -38,7 +42,6 @@ def refresh_access_token():
 
 
 def get_holidays(year, month):
-    """공공데이터포털 공휴일 API"""
     url = "http://apis.data.go.kr/B090041/openapi/service/SpcdeInfoService/getRestDeInfo"
     params = {
         "serviceKey": PUBLIC_DATA_API_KEY,
@@ -68,36 +71,26 @@ def get_holidays(year, month):
 
 
 def is_holiday(date):
-    """주말 또는 공휴일 여부 확인"""
-    if date.weekday() >= 5:  # 토/일
+    if date.weekday() >= 5:
         return True
     holidays = get_holidays(date.year, date.month)
     return date in holidays
 
 
 def get_collection_range(today):
-    """수집 시작일 계산 (연휴 자동 처리)"""
-    # 오늘이 공휴일이면 실행 안 함
     if is_holiday(today):
-        return None, None, True  # skip=True
+        return None, None, True
 
-    # 어제부터 거슬러 올라가며 마지막 평일 찾기
     check = today - timedelta(days=1)
     while is_holiday(check):
         check -= timedelta(days=1)
 
-    # check = 마지막 평일
-    # check 전날도 연속 휴일인지 확인해서 start 결정
-    start_day = check  # 마지막 평일 07:00부터
-
-    start_dt = datetime(start_day.year, start_day.month, start_day.day, 7, 0, 0, tzinfo=KST)
+    start_dt = datetime(check.year, check.month, check.day, 7, 0, 0, tzinfo=KST)
     end_dt = datetime(today.year, today.month, today.day, 7, 0, 0, tzinfo=KST)
-
     return start_dt, end_dt, False
 
 
 def get_all_news(topic, start_dt, end_dt):
-    """start_dt ~ end_dt 사이 기사 전부 수집"""
     url = "https://openapi.naver.com/v1/search/news.json"
     headers = {
         "X-Naver-Client-Id": NAVER_CLIENT_ID,
@@ -155,7 +148,7 @@ def clean_text(text):
         .replace('&lt;', '<').replace('&gt;', '>').strip()
 
 
-def generate_html(topic_news, start_dt, end_dt):
+def generate_html(channel_name, topic_news, start_dt, end_dt):
     now = datetime.now(KST)
     date_str = now.strftime("%Y년 %m월 %d일")
     total = sum(len(v) for v in topic_news.values())
@@ -195,7 +188,6 @@ def generate_html(topic_news, start_dt, end_dt):
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
         * {{ box-sizing: border-box; margin: 0; padding: 0; }}
         body {{ font-family: 'Noto Sans KR', -apple-system, sans-serif; background: #0f0f1a; color: #e8e8f0; min-height: 100vh; }}
-
         .hero {{
             background: linear-gradient(135deg, #1a1a3e 0%, #16213e 50%, #0f3460 100%);
             padding: 48px 24px 40px;
@@ -225,7 +217,6 @@ def generate_html(topic_news, start_dt, end_dt):
             font-size: 12px;
             color: #a5b4fc;
             margin-bottom: 16px;
-            letter-spacing: 0.5px;
         }}
         .hero h1 {{
             font-size: clamp(22px, 5vw, 32px);
@@ -251,16 +242,13 @@ def generate_html(topic_news, start_dt, end_dt):
         .stat {{ text-align: center; }}
         .stat-num {{ font-size: 24px; font-weight: 900; color: #818cf8; display: block; }}
         .stat-label {{ font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }}
-
         .container {{ max-width: 780px; margin: 0 auto; padding: 24px 16px; }}
-
         .section {{
             background: #1a1a2e;
             border: 1px solid rgba(255,255,255,0.07);
             border-radius: 16px;
             margin-bottom: 20px;
             overflow: hidden;
-            transition: border-color 0.2s;
         }}
         .section:hover {{ border-color: rgba(99,102,241,0.3); }}
         .section-header {{
@@ -275,11 +263,8 @@ def generate_html(topic_news, start_dt, end_dt):
             font-size: 15px;
             font-weight: 700;
             color: #a5b4fc;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }}
-        .topic-tag::before {{ content: '#'; color: #6366f1; }}
+        .topic-tag::before {{ content: '# '; color: #6366f1; }}
         .count {{
             font-size: 12px;
             color: #6366f1;
@@ -289,25 +274,22 @@ def generate_html(topic_news, start_dt, end_dt):
             padding: 3px 12px;
             font-weight: 600;
         }}
-
         table {{ width: 100%; border-collapse: collapse; }}
-        tr {{ border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s; }}
+        tr {{ border-bottom: 1px solid rgba(255,255,255,0.04); }}
         tr:last-child {{ border-bottom: none; }}
         tr:hover {{ background: rgba(99,102,241,0.06); }}
         td {{ padding: 10px 20px; vertical-align: top; }}
-        .time {{ color: #4b5563; font-size: 11px; white-space: nowrap; padding-right: 8px; padding-top: 12px; font-variant-numeric: tabular-nums; }}
+        .time {{ color: #4b5563; font-size: 11px; white-space: nowrap; padding-top: 12px; }}
         .title {{ padding-top: 10px; line-height: 1.6; }}
         .title a {{ color: #d1d5db; text-decoration: none; font-size: 14px; }}
         .title a:hover {{ color: #a5b4fc; }}
         .empty {{ text-align: center; color: #374151; padding: 28px; font-size: 13px; }}
-
         .footer {{
             text-align: center;
             padding: 32px 24px;
             color: #374151;
             font-size: 12px;
             border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 8px;
         }}
         .footer strong {{ color: #4b5563; }}
     </style>
@@ -339,25 +321,23 @@ def generate_html(topic_news, start_dt, end_dt):
 </html>"""
 
 
-def send_kakao_text(access_token, topic_news, start_dt, end_dt, page_url):
+def send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, page_url):
     url = "https://kapi.kakao.com/v2/api/talk/memo/default/send"
     headers = {"Authorization": f"Bearer {access_token}"}
 
     now = datetime.now(KST)
     total = sum(len(v) for v in topic_news.values())
 
-    # 수집 기간 표시
     if start_dt.date() == end_dt.date() - timedelta(days=1):
         period_str = f"{start_dt.strftime('%m.%d')} 07:00 ~ {end_dt.strftime('%m.%d')} 07:00"
     else:
         period_str = f"{start_dt.strftime('%m.%d')} ~ {end_dt.strftime('%m.%d')} 07:00"
 
-    # 이모지 뱃지
     topic_emojis = ["🔵", "🟢", "🟡", "🟠", "🔴"]
 
     lines = [
         "╔══════════════════════╗",
-        "║  📰 오늘의 뉴스 브리핑  ║",
+        f"║  📰 {channel_name} 브리핑  ║",
         "╚══════════════════════╝",
         "",
         f"🗓  {now.strftime('%Y.%m.%d')}  |  {period_str}",
@@ -399,17 +379,15 @@ def main():
     now = datetime.now(KST)
     today = now.date()
 
-    # 공휴일/주말 체크
-    print(f"오늘 날짜: {today} ({['월','화','수','목','금','토','일'][today.weekday()]})")
+    print(f"오늘: {today} ({['월','화','수','목','금','토','일'][today.weekday()]})")
     start_dt, end_dt, skip = get_collection_range(today)
 
     if skip:
-        print("오늘은 공휴일/주말입니다. 브리핑을 건너뜁니다.")
+        print("공휴일/주말 → 브리핑 건너뜁니다.")
         return
 
-    print(f"수집 기간: {start_dt.strftime('%m/%d %H:%M')} ~ {end_dt.strftime('%m/%d %H:%M')}")
+    print(f"수집 범위: {start_dt.strftime('%m/%d %H:%M')} ~ {end_dt.strftime('%m/%d %H:%M')}")
 
-    # 토큰 갱신
     print("Access Token 갱신 중...")
     access_token = refresh_access_token()
     if not access_token:
@@ -417,27 +395,36 @@ def main():
         return
     print("토큰 갱신 완료")
 
-    # 뉴스 수집
-    topic_news = {}
-    for topic in NEWS_TOPICS:
-        print(f"【{topic}】 수집 중...")
-        items = get_all_news(topic, start_dt, end_dt)
-        topic_news[topic] = items
-        print(f"  → {len(items)}건")
+    base_url = "https://tjdals7843-byte.github.io/news-briefing"
 
-    # HTML 생성
-    html = generate_html(topic_news, start_dt, end_dt)
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
-    print("HTML 생성 완료!")
+    for idx, channel in enumerate(CHANNELS):
+        channel_name = channel["name"]
+        topics = channel["topics"]
+        print(f"\n=== {channel_name} ===")
 
-    # 카카오톡 전송
-    page_url = "https://tjdals7843-byte.github.io/news-briefing/"
-    status, result = send_kakao_text(access_token, topic_news, start_dt, end_dt, page_url)
-    if status == 200:
-        print("카카오톡 전송 완료!")
-    else:
-        print(f"카카오톡 전송 실패: {status} / {result}")
+        topic_news = {}
+        for topic in topics:
+            print(f"  【{topic}】 수집 중...")
+            items = get_all_news(topic, start_dt, end_dt)
+            topic_news[topic] = items
+            print(f"    → {len(items)}건")
+
+        # HTML 파일 생성 (채널별 폴더)
+        folder = f"channel{idx + 1}"
+        import os as _os
+        _os.makedirs(folder, exist_ok=True)
+        html = generate_html(channel_name, topic_news, start_dt, end_dt)
+        with open(f"{folder}/index.html", "w", encoding="utf-8") as f:
+            f.write(html)
+        print(f"  HTML 생성 완료: {folder}/index.html")
+
+        # 카카오톡 전송
+        page_url = f"{base_url}/{folder}/"
+        status, result = send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, page_url)
+        if status == 200:
+            print(f"  카카오톡 전송 완료!")
+        else:
+            print(f"  카카오톡 전송 실패: {status} / {result}")
 
 
 if __name__ == "__main__":
