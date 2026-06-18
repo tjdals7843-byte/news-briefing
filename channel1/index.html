@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang='ko'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>📰 뉴스 브리핑 · 2026년 06월 18일</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Noto Sans KR', -apple-system, sans-serif; background: #0f0f1a; color: #e8e8f0; min-height: 100vh; }
+        .hero {
+            background: linear-gradient(135deg, #1a1a3e 0%, #16213e 50%, #0f3460 100%);
+            padding: 48px 24px 40px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(99,102,241,0.15) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(99,102,241,0.2);
+            border: 1px solid rgba(99,102,241,0.4);
+            border-radius: 20px;
+            padding: 5px 14px;
+            font-size: 12px;
+            color: #a5b4fc;
+            margin-bottom: 16px;
+        }
+        .hero h1 {
+            font-size: clamp(22px, 5vw, 32px);
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        .hero h1 span { color: #818cf8; }
+        .hero-sub {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 24px;
+        }
+        .stats {
+            display: inline-flex;
+            gap: 24px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 14px 28px;
+        }
+        .stat { text-align: center; }
+        .stat-num { font-size: 24px; font-weight: 900; color: #818cf8; display: block; }
+        .stat-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+        .container { max-width: 780px; margin: 0 auto; padding: 24px 16px; }
+        .section {
+            background: #1a1a2e;
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .section:hover { border-color: rgba(99,102,241,0.3); }
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: rgba(99,102,241,0.08);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .topic-tag {
+            font-size: 15px;
+            font-weight: 700;
+            color: #a5b4fc;
+        }
+        .topic-tag::before { content: '# '; color: #6366f1; }
+        .count {
+            font-size: 12px;
+            color: #6366f1;
+            background: rgba(99,102,241,0.15);
+            border: 1px solid rgba(99,102,241,0.3);
+            border-radius: 20px;
+            padding: 3px 12px;
+            font-weight: 600;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+        tr:last-child { border-bottom: none; }
+        tr:hover { background: rgba(99,102,241,0.06); }
+        td { padding: 10px 20px; vertical-align: top; }
+        .time { color: #4b5563; font-size: 11px; white-space: nowrap; padding-top: 12px; }
+        .title { padding-top: 10px; line-height: 1.6; }
+        .title a { color: #d1d5db; text-decoration: none; font-size: 14px; }
+        .title a:hover { color: #a5b4fc; }
+        .empty { text-align: center; color: #374151; padding: 28px; font-size: 13px; }
+        .footer {
+            text-align: center;
+            padding: 32px 24px;
+            color: #374151;
+            font-size: 12px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+        .footer strong { color: #4b5563; }
+    </style>
+</head>
+<body>
+    <div class='hero'>
+        <div class='hero-badge'>⚡ 자동 뉴스 브리핑</div>
+        <h1>성민이가 전달하는<br><span>뉴스 소식!</span></h1>
+        <div class='hero-sub'>📅 2026년 06월 18일 &nbsp;·&nbsp; 06/17 07:00 ~ 06/18 07:00</div>
+        <div class='stats'>
+            <div class='stat'>
+                <span class='stat-num'>129</span>
+                <div class='stat-label'>총 기사</div>
+            </div>
+            <div class='stat'>
+                <span class='stat-num'>4</span>
+                <div class='stat-label'>주제</div>
+            </div>
+        </div>
+    </div>
+    <div class='container'>
+        
+        <div class='section'>
+            <div class='section-header'>
+                <span class='topic-tag'>교도소</span>
+                <span class='count'>68건</span>
+            </div>
+            <table>
+                <tr>
+                    <td class='time'>06/18 00:00</td>
+                    <td class='title'>
+                        <a href='https://www.econovill.com/news/articleView.html?idxno=742705' target='_blank'>페이블 5 막혔는데 "며칠 내 풀린다" 앤트로픽의 자신감</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 23:51</td>
+                    <td class='title'>
+                        <a href='https://www.munhwa.com/article/11596322?ref=naver' target='_blank'>“조기유학 절대 안돼”아들 마약 직접신고 남경필의 말</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 21:43</td>
+                    <td class='title'>
+                        <a href='https://news.kbs.co.kr/news/pc/view/view.do?ncd=8588958&ref=A' target='_blank'>멈춰선 대구 문화 정책…민선 9기 과제는?</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 21:24</td>
+                    <td class='title'>
+                        <a href='https://www.digitaltoday.co.kr/news/articleView.html?idxno=676032' target='_blank'>SBF, 출소 후 '자체 코인 발행' 언급…트럼프에 사면 신청</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 20:58</td>
+                    <td class='title'>
+                        <a href='http://www.kwangju.co.kr/article.php?aid=1781697300800279006' target='_blank'>수형자에 “가석방 도와 주겠다”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 20:39</td>
+                    <td class='title'>
+                        <a href='https://www.tvreport.co.kr/world/article/1054661/' target='_blank'>래퍼 미스티칼, 강간 혐의로 징역 20년형.. "동종 범죄로 이미 6년 복역...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:42</td>
+                    <td class='title'>
+                        <a href='http://www.kjdaily.com/article.php?aid=1781692801680536005' target='_blank'>수형자 상대 ‘금품수수’ 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:27</td>
+                    <td class='title'>
+                        <a href='https://news.kbs.co.kr/news/pc/view/view.do?ncd=8588765&ref=A' target='_blank'>[여기는 전남] 여객선 운항 축소에 가거도 주민들 “생계 타격”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:25</td>
+                    <td class='title'>
+                        <a href='https://mhnse.com/news/articleView.html?idxno=1433309' target='_blank'>화끈하게 삭발했네…'참교육' 촉법소년 4인방, '촉법네컷' 공개 [MHN:피드...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:08</td>
+                    <td class='title'>
+                        <a href='https://www.mt.co.kr/society/2026/06/17/2026061718593441807' target='_blank'>"가석방 도와줄게" 3000만원 뜯었다...교도관→수용자 신세 된 50대</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:03</td>
+                    <td class='title'>
+                        <a href='https://news.kbs.co.kr/news/pc/view/view.do?ncd=8588693&ref=A' target='_blank'>멈춰선 대구 문화 정책…민선 9기 과제는?</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:02</td>
+                    <td class='title'>
+                        <a href='https://www.gnnews.co.kr/news/articleView.html?idxno=639185' target='_blank'>진주교도소 교정협의회, 수용자 생수 3만병 기증</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:01</td>
+                    <td class='title'>
+                        <a href='https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003244143&CMPT_CD=P0010&utm_source=naver&utm_medium=newsearch&utm_campaign=naver_news' target='_blank'>"가석방 돕겠다" 수형인들에 뇌물 3천만 원 받은 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:42</td>
+                    <td class='title'>
+                        <a href='https://www.daejonilbo.com/news/articleView.html?idxno=2282376' target='_blank'>강훈식 비서실장 "지연 과제 점검"…충청권도 촉각</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:33</td>
+                    <td class='title'>
+                        <a href='http://www.gndomin.com/news/articleView.html?idxno=479007' target='_blank'>박완수 지사 "통합방위태세 강화가 호국정신 계승의 길"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:32</td>
+                    <td class='title'>
+                        <a href='http://www.jndn.com/article.php?aid=1781688575434484005' target='_blank'>“가석방 돕겠다” 뇌물챙긴 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:30</td>
+                    <td class='title'>
+                        <a href='http://www.enewstoday.co.kr/news/articleView.html?idxno=2439929' target='_blank'>박완수 경남도지사, "통합방위태세 강화, 도민 안전 힘 모아달라"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:14</td>
+                    <td class='title'>
+                        <a href='https://www.newsgn.com/news/articleView.html?idxno=557513' target='_blank'>경남도, '2026년 2분기 통합방위협의회' 개최</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:11</td>
+                    <td class='title'>
+                        <a href='https://www.mk.co.kr/article/12076729' target='_blank'>“가석방 도와줄게”…수형자 3명에게 3000만원 뇌물 받은 교도관</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:08</td>
+                    <td class='title'>
+                        <a href='https://www.jnilbo.com/news/articleView.html?idxno=90000043336' target='_blank'>가석방 미끼로 3000만원 챙긴 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:01</td>
+                    <td class='title'>
+                        <a href='https://biz.heraldcorp.com/article/10774171?ref=naver' target='_blank'>남경필 “모범생 아들이 마약, 조기유학 절대 보내지 말라!”…장남 ‘...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:59</td>
+                    <td class='title'>
+                        <a href='https://www.nongmin.com/article/20260617500322' target='_blank'>대구농협·대구교도소 보라미봉사단, 농심천심 범농협 농촌일손 집중 지...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:54</td>
+                    <td class='title'>
+                        <a href='https://www.yna.co.kr/view/AKR20260617097551054?input=1195m' target='_blank'>가석방 도와줄게…수형자에게 뇌물 받은 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:52</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gwangju-jeonnam/6200508' target='_blank'>"가석방 도와줄게" 3천만원 뇌물 의혹 50대 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:42</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003673228' target='_blank'>"가석방 도울게" 수형인들에게 3000만원 챙긴 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:34</td>
+                    <td class='title'>
+                        <a href='https://www.joongdo.co.kr/web/view.php?key=20260617010004870' target='_blank'>“돈 주면 수용자 챙겨주겠다”… 대전교도소 교감 징역 3년 구형</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:18</td>
+                    <td class='title'>
+                        <a href='https://www.gukjenews.com/news/articleView.html?idxno=3610886' target='_blank'>충남서부보훈지청-홍성교도소, '사랑의 제빵 나눔' 행사 개최</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:57</td>
+                    <td class='title'>
+                        <a href='https://www.dailian.co.kr/news/view/1657013/?sc=Naver' target='_blank'>남경필 "'마약한 아들 구속해달라' 탄원서까지 썼다"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:50</td>
+                    <td class='title'>
+                        <a href='https://www.joongdo.co.kr/web/view.php?key=20260617010004871' target='_blank'>민선 9기 대전시, 지역 도시개발 현안 실마리 풀까</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:38</td>
+                    <td class='title'>
+                        <a href='https://biz.chosun.com/topics/topics_social/2026/06/17/JC2KXIYFDRG7RIVSZX2SS533D4/?utm_source=naver&utm_medium=original&utm_campaign=biz' target='_blank'>‘전자발찌 훼손·무단외출’ 조두순, 2심도 징역 8월</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:31</td>
+                    <td class='title'>
+                        <a href='https://www.mt.co.kr/society/2026/06/17/2026061715432992615' target='_blank'>"도망갈 수 있습니다요" 횡설수설 조두순…'무단이탈' 2심도 징역 8개월</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:26</td>
+                    <td class='title'>
+                        <a href='http://www.ktsketch.co.kr/news/articleView.html?idxno=8730' target='_blank'>[여름 대표 축제] 전라도 장흥에서 열리는 글로벌 페스티벌, '제29회 정...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:19</td>
+                    <td class='title'>
+                        <a href='https://www.nocutnews.co.kr/news/6534558?utm_source=naver&utm_medium=article&utm_campaign=20260617041816' target='_blank'>경남 통합방위 태세 점검…각종 안보 위기 상황 선제 대응</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:15</td>
+                    <td class='title'>
+                        <a href='http://www.cine21.com/news/view/?mag_id=110152&utm_source=naver&utm_medium=news' target='_blank'>[리뷰] 두려워 말라는 속삭임에 탄복하거나, 허탈하거나, <디스클로저 데...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:14</td>
+                    <td class='title'>
+                        <a href='https://www.sportsseoul.com/news/read/1616724?ref=naver' target='_blank'>“촉법네컷”…‘참교육’ 장요훈→임현묵, 삭발 전 사진 공개</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:49</td>
+                    <td class='title'>
+                        <a href='https://www.seoul.co.kr/news/society/2026/06/17/20260617500200?wlog_tag3=naver' target='_blank'>“가석방 도와줄게”…수형자들에게 3000만원 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:48</td>
+                    <td class='title'>
+                        <a href='http://www.yonhapnewstv.co.kr/news/AKR20260617154712d0x' target='_blank'>"가석방 도와줄게"…수형자들에게 수천만 원 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:34</td>
+                    <td class='title'>
+                        <a href='http://news.lghellovision.net/news/articleView.html?idxno=545866' target='_blank'>전남경찰, 가석방 대가 뇌물수수 교도관 구속영장 신청</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:09</td>
+                    <td class='title'>
+                        <a href='https://news.tvchosun.com/site/data/html_dir/2026/06/17/2026061790197.html' target='_blank'>'가석방 도와줄게' 죄수들에게 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:05</td>
+                    <td class='title'>
+                        <a href='https://www.segye.com/newsView/20260617512480?OutUrl=naver' target='_blank'>“가석방 도와주겠다” 수형자들에게 수천만원 뇌물 수수… 교도관 구속...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:00</td>
+                    <td class='title'>
+                        <a href='http://www.fnnews.com/news/202606171425000259' target='_blank'>"가석방 도와줄게"…수형자들에게 3000만원 뇌물 받은 교도관</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:44</td>
+                    <td class='title'>
+                        <a href='https://www.gukjenews.com/news/articleView.html?idxno=3610745' target='_blank'>대구농협·대구교도소, 달성군 참외농가 일손돕기 봉사 실시</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:43</td>
+                    <td class='title'>
+                        <a href='https://news.jtbc.co.kr/article/NB12303647?influxDiv=NAVER' target='_blank'>"가석방 원해?" 수형인 접근해 뇌물챙긴 교도관 구속 기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:29</td>
+                    <td class='title'>
+                        <a href='https://mhnse.com/news/articleView.html?idxno=1433005' target='_blank'>'참교육' 14살 촉법 소년 장요훈, 실제 나이 '34세' 충격→"나이는 93년생...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:23</td>
+                    <td class='title'>
+                        <a href='https://www.hankyung.com/article/2026061717787' target='_blank'>남경필 "칭화대생 아들이 마약…조기유학 절대 보내지말라"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:58</td>
+                    <td class='title'>
+                        <a href='http://www.lawissue.co.kr/view.php?ud=2026061713545624129a8c8bf58f_12' target='_blank'>진주교도소 교정협의회, 수용자 위한 생수 3만병 기증</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:47</td>
+                    <td class='title'>
+                        <a href='https://www.yna.co.kr/view/AKR20260617097500054?input=1195m' target='_blank'>'가석방 도와줄게' 수형자들에게 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:30</td>
+                    <td class='title'>
+                        <a href='https://www.sportsseoul.com/news/read/1616622?ref=naver' target='_blank'>“진짜 욕하면서 봤다”…‘참교육’ 빛낸 ‘참 악역’ 넷 [SS스타]</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:25</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gwangju-jeonnam/6200019' target='_blank'>수용자 편의 청탁·뇌물 의혹…50대 교도관 구속 기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:10</td>
+                    <td class='title'>
+                        <a href='https://kormedi.com/?p=2825117' target='_blank'>"젖병 물고 아이 말투"…12세 자폐아 입양해 1년 돌봤는데 37세, 전부 사...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:56</td>
+                    <td class='title'>
+                        <a href='https://www.gukjenews.com/news/articleView.html?idxno=3610669' target='_blank'>서울남부교도소, '생명 나눔' 실천한 교도소 직원들…헌혈행사로 온정 ...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:49</td>
+                    <td class='title'>
+                        <a href='https://www.kwnews.co.kr/page/view/2026061750030100000' target='_blank'>TV하이라이트-6월18일</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:30</td>
+                    <td class='title'>
+                        <a href='https://isplus.com/article/view/isp202606170077' target='_blank'>‘참교육’ 장요훈 “1993년생인데 14살 연기…머리는 실제로 삭발”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:06</td>
+                    <td class='title'>
+                        <a href='http://www.stoo.com/article.php?aid=107194144694' target='_blank'>33세에 14세 촉법소년 연기…장요훈, 알고 보니 성균관대 중퇴 후 한예종...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:01</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003672568' target='_blank'>"가석방 힘써줄게"…수형인에 뇌물챙긴 교도관 구속기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:42</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003672506' target='_blank'>[진주소식]교정협의회, 교도소 수용자 위한 생수 기증 등</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:25</td>
+                    <td class='title'>
+                        <a href='https://www.donga.com/news/Society/article/all/20260617/134127395/1' target='_blank'>“가석방 도와줄게” 3000만원 챙긴 전남 교도관 구속영장 신청</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:22</td>
+                    <td class='title'>
+                        <a href='http://www.osen.co.kr/article/G1112822820' target='_blank'>'참교육' 촉법소년 장요훈, 실제 나이 33세 대반전 "93년생인데 14살 연...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:18</td>
+                    <td class='title'>
+                        <a href='https://www.spotvnews.co.kr/news/articleView.html?idxno=823017' target='_blank'>'참교육' 촉법소년 장요훈 "14살 연기한 34살…얼굴살 위해 운동 없이 야...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:00</td>
+                    <td class='title'>
+                        <a href='http://www.lawissue.co.kr/view.php?ud=202606171054573539a8c8bf58f_12' target='_blank'>안양교도소, 시한부 외국인 수용자 품어준 ‘청주성모꽃마을’에 따뜻...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 10:48</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/sejong-chungbuk/6199827' target='_blank'>"도박사이트 자금 있다" 교도소 동기 말에 가정집 턴 일당…징역 7~10년</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 10:34</td>
+                    <td class='title'>
+                        <a href='https://www.ilyosisa.co.kr/news/article.html?no=256471' target='_blank'><단독> ‘민간인 수용 사전 조치’ 국방부 법무관리관실 내란 동조 의혹</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 10:06</td>
+                    <td class='title'>
+                        <a href='http://mbn.mk.co.kr/pages/news/newsView.php?category=mbn00009&news_seq_no=5200278' target='_blank'>[단독] 출소 3개월 만에 또 술값 먹튀...40대 남성 구속 송치</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 09:43</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003672015' target='_blank'>푸틴 풍자 예술가, 망명지 폴란드에서 총격 피살</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 09:36</td>
+                    <td class='title'>
+                        <a href='http://www.doctorstimes.com/news/articleView.html?idxno=238599' target='_blank'>[의사신문 만평] "오늘도 교도소 담장 위를 걷는다"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 09:24</td>
+                    <td class='title'>
+                        <a href='https://www.catholictimes.org/article/20260611500073' target='_blank'>[WYD와 함께] 대구 교구대회 “함께 걷는 교회, 함께 만들어 가는 WYD”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 08:10</td>
+                    <td class='title'>
+                        <a href='https://www.startuptoday.co.kr/news/articleView.html?idxno=803822' target='_blank'>[인터뷰] 김성제 의왕시장 "시민이 건의하면 메모부터…'약속 행정' 이어...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 07:50</td>
+                    <td class='title'>
+                        <a href='https://www.xportsnews.com/article/2161246' target='_blank'>'참교육' 촉법소년 배우들, 실제 삭발이었다니…"더운 여름이라 시원했...</a>
+                    </td>
+                </tr></table>
+        </div>
+        <div class='section'>
+            <div class='section-header'>
+                <span class='topic-tag'>교정청</span>
+                <span class='count'>2건</span>
+            </div>
+            <table>
+                <tr>
+                    <td class='time'>06/18 06:02</td>
+                    <td class='title'>
+                        <a href='https://www.mediapen.com/news/view/1103774' target='_blank'>[해커스 한국사]안지영 쌤의 적중 한국사 퀴즈</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:18</td>
+                    <td class='title'>
+                        <a href='http://www.lawissue.co.kr/view.php?ud=2026061717145439659a8c8bf58f_12' target='_blank'>대구지방교정청 교정연합회, 정기총회 가져…교정위원 17명 표창 수상</a>
+                    </td>
+                </tr></table>
+        </div>
+        <div class='section'>
+            <div class='section-header'>
+                <span class='topic-tag'>교도관</span>
+                <span class='count'>44건</span>
+            </div>
+            <table>
+                <tr>
+                    <td class='time'>06/18 01:26</td>
+                    <td class='title'>
+                        <a href='https://enter.etoday.co.kr/news/view/298658' target='_blank'>김무열, '참교육' 비하인드 사진 공개 "사랑해요 선생님"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 21:56</td>
+                    <td class='title'>
+                        <a href='http://www.stoo.com/article.php?aid=107212027639' target='_blank'>김무열, '참교육' 급식도우미→학생들과 단체컷까지 대방출 "사랑해요 ...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 21:39</td>
+                    <td class='title'>
+                        <a href='https://www.kmib.co.kr/article/view.asp?arcid=0029983333&code=61121311&cp=nv' target='_blank'>이화영 “술자리 있었다… 검찰 ‘엉터리 자료’ 탓에 날짜 잘못 지목”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 20:58</td>
+                    <td class='title'>
+                        <a href='https://www.kyeongin.com/article/1765775' target='_blank'>“술 마셨다” 들었다는 재소자… “교도관 있었는데 불가” [이화영 국...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 20:58</td>
+                    <td class='title'>
+                        <a href='http://www.kwangju.co.kr/article.php?aid=1781697300800279006' target='_blank'>수형자에 “가석방 도와 주겠다”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:42</td>
+                    <td class='title'>
+                        <a href='http://www.kjdaily.com/article.php?aid=1781692801680536005' target='_blank'>수형자 상대 ‘금품수수’ 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:27</td>
+                    <td class='title'>
+                        <a href='https://news.kbs.co.kr/news/pc/view/view.do?ncd=8588765&ref=A' target='_blank'>[여기는 전남] 여객선 운항 축소에 가거도 주민들 “생계 타격”</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:08</td>
+                    <td class='title'>
+                        <a href='https://www.mt.co.kr/society/2026/06/17/2026061718593441807' target='_blank'>"가석방 도와줄게" 3000만원 뜯었다...교도관→수용자 신세 된 50대</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:01</td>
+                    <td class='title'>
+                        <a href='https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003244143&CMPT_CD=P0010&utm_source=naver&utm_medium=newsearch&utm_campaign=naver_news' target='_blank'>"가석방 돕겠다" 수형인들에 뇌물 3천만 원 받은 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:32</td>
+                    <td class='title'>
+                        <a href='http://www.jndn.com/article.php?aid=1781688575434484005' target='_blank'>“가석방 돕겠다” 뇌물챙긴 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:19</td>
+                    <td class='title'>
+                        <a href='https://www.ytn.co.kr/_ln/0103_202606171819370915' target='_blank'>이화영 동료 재소자 "검사가 술 따라줘 마셨다 들어" 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:11</td>
+                    <td class='title'>
+                        <a href='https://www.mk.co.kr/article/12076729' target='_blank'>“가석방 도와줄게”…수형자 3명에게 3000만원 뇌물 받은 교도관</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:09</td>
+                    <td class='title'>
+                        <a href='https://news.kbs.co.kr/news/pc/view/view.do?ncd=8588667&ref=A' target='_blank'>이화영 재판 동료 재소자 “술 한잔해 기분 좋다 말해”…공방 계속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 18:08</td>
+                    <td class='title'>
+                        <a href='https://www.jnilbo.com/news/articleView.html?idxno=90000043336' target='_blank'>가석방 미끼로 3000만원 챙긴 교도관 구속</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:59</td>
+                    <td class='title'>
+                        <a href='https://www.nongmin.com/article/20260617500322' target='_blank'>대구농협·대구교도소 보라미봉사단, 농심천심 범농협 농촌일손 집중 지...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:54</td>
+                    <td class='title'>
+                        <a href='https://www.yna.co.kr/view/AKR20260617097551054?input=1195m' target='_blank'>가석방 도와줄게…수형자에게 뇌물 받은 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:52</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gwangju-jeonnam/6200508' target='_blank'>"가석방 도와줄게" 3천만원 뇌물 의혹 50대 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:42</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003673228' target='_blank'>"가석방 도울게" 수형인들에게 3000만원 챙긴 교도관 구속(종합)</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:48</td>
+                    <td class='title'>
+                        <a href='http://news.lghellovision.net/news/articleView.html?idxno=545896' target='_blank'>[다시보기] 헬로tv뉴스 전남 2026년 6월 17일</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:45</td>
+                    <td class='title'>
+                        <a href='https://www.sisajournal.com/news/articleView.html?idxno=376828' target='_blank'>이화영 동료 재소자, 법정서 "'검사님이 소주 한가득 따라주셨다'고 들...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:35</td>
+                    <td class='title'>
+                        <a href='https://www.khan.co.kr/article/202606171635001' target='_blank'>이화영 동료 재소자 “검사가 종이컵에 술 따라줬다고 말해···얼굴 붉...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 16:32</td>
+                    <td class='title'>
+                        <a href='https://news.tvchosun.com/site/data/html_dir/2026/06/17/2026061790232.html' target='_blank'>"이화영, 검찰 다녀와 '회에 술 한잔했다' 자랑"…동료 재소자 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:56</td>
+                    <td class='title'>
+                        <a href='https://www.slist.kr/news/articleView.html?idxno=745858' target='_blank'>이화영 동료 재소자 "검사가 종이컵에 술 따라줬다 들어" 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:49</td>
+                    <td class='title'>
+                        <a href='https://www.seoul.co.kr/news/society/2026/06/17/20260617500200?wlog_tag3=naver' target='_blank'>“가석방 도와줄게”…수형자들에게 3000만원 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:48</td>
+                    <td class='title'>
+                        <a href='http://www.yonhapnewstv.co.kr/news/AKR20260617154712d0x' target='_blank'>"가석방 도와줄게"…수형자들에게 수천만 원 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:39</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gyeonggi/6200237' target='_blank'>"'검사가 술 따라줬다' 100% 들었다"…이화영 동료 재소자 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:34</td>
+                    <td class='title'>
+                        <a href='http://news.lghellovision.net/news/articleView.html?idxno=545866' target='_blank'>전남경찰, 가석방 대가 뇌물수수 교도관 구속영장 신청</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:29</td>
+                    <td class='title'>
+                        <a href='https://www.yna.co.kr/view/AKR20260617106000061?input=1195m' target='_blank'>이화영 동료 재소자 "검사가 종이컵에 술 따라줬다 들어" 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:16</td>
+                    <td class='title'>
+                        <a href='https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003243976&CMPT_CD=P0010&utm_source=naver&utm_medium=newsearch&utm_campaign=naver_news' target='_blank'>동료 재소자 "이화영, 검사가 페트병에 담긴 소주 따라줬다고 했다"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:09</td>
+                    <td class='title'>
+                        <a href='https://news.tvchosun.com/site/data/html_dir/2026/06/17/2026061790197.html' target='_blank'>'가석방 도와줄게' 죄수들에게 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:05</td>
+                    <td class='title'>
+                        <a href='https://www.segye.com/newsView/20260617512480?OutUrl=naver' target='_blank'>“가석방 도와주겠다” 수형자들에게 수천만원 뇌물 수수… 교도관 구속...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:00</td>
+                    <td class='title'>
+                        <a href='http://www.fnnews.com/news/202606171425000259' target='_blank'>"가석방 도와줄게"…수형자들에게 3000만원 뇌물 받은 교도관</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:44</td>
+                    <td class='title'>
+                        <a href='https://www.gukjenews.com/news/articleView.html?idxno=3610745' target='_blank'>대구농협·대구교도소, 달성군 참외농가 일손돕기 봉사 실시</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:43</td>
+                    <td class='title'>
+                        <a href='https://news.jtbc.co.kr/article/NB12303647?influxDiv=NAVER' target='_blank'>"가석방 원해?" 수형인 접근해 뇌물챙긴 교도관 구속 기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:14</td>
+                    <td class='title'>
+                        <a href='https://www.namdonews.com/news/articleView.html?idxno=913882' target='_blank'>"가석방 미끼로 수천만 원"…수형자 돈 뜯은 전남 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:50</td>
+                    <td class='title'>
+                        <a href='https://www.siminilbo.co.kr/news/newsview.php?ncode=1160282938096112' target='_blank'>[고하승 칼럼] 이화영 ‘술 파티 위증 혐의’ 자업자득이다</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:47</td>
+                    <td class='title'>
+                        <a href='https://www.yna.co.kr/view/AKR20260617097500054?input=1195m' target='_blank'>'가석방 도와줄게' 수형자들에게 뇌물 받은 교도관 구속영장</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:33</td>
+                    <td class='title'>
+                        <a href='https://www.chosun.com/national/court_law/2026/06/17/LOTXGQ2EKRFY5NX7KSLONQHI3E/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news' target='_blank'>“이화영, 검찰 다녀와서 ‘회에 술 마셨다’ 자랑해”... 동료 재소자 ...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:25</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gwangju-jeonnam/6200019' target='_blank'>수용자 편의 청탁·뇌물 의혹…50대 교도관 구속 기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:14</td>
+                    <td class='title'>
+                        <a href='http://www.newstomato.com/ReadNews.aspx?no=1304233&inflow=N' target='_blank'>(이화영 '국참' 참관)'술 반입' 기록에도 박상용 등 엇갈리는 진술</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 12:01</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003672568' target='_blank'>"가석방 힘써줄게"…수형인에 뇌물챙긴 교도관 구속기로</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 11:25</td>
+                    <td class='title'>
+                        <a href='https://www.donga.com/news/Society/article/all/20260617/134127395/1' target='_blank'>“가석방 도와줄게” 3000만원 챙긴 전남 교도관 구속영장 신청</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 09:42</td>
+                    <td class='title'>
+                        <a href='https://zdnet.co.kr/view/?no=20260617092148' target='_blank'>'루나 어비스' 개발사 콰리 랩스, 신작 출시 한 달 만에 개발팀 전원 해...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 07:32</td>
+                    <td class='title'>
+                        <a href='https://www.pennmike.com/news/articleView.html?idxno=122238' target='_blank'>[막전막후] '2시간 술파티'가 현장검증에선 '30분'으로…이화영의 말바...</a>
+                    </td>
+                </tr></table>
+        </div>
+        <div class='section'>
+            <div class='section-header'>
+                <span class='topic-tag'>교정본부</span>
+                <span class='count'>15건</span>
+            </div>
+            <table>
+                <tr>
+                    <td class='time'>06/18 05:30</td>
+                    <td class='title'>
+                        <a href='https://www.newsis.com/view/NISX20260617_0003673229' target='_blank'>구광모號 LG 체질개선 8년차…윤곽 드러난 'ABC' 전략</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 19:31</td>
+                    <td class='title'>
+                        <a href='https://www.hankookilbo.com/news/article/A2026061717220002095?did=NA' target='_blank'>이화영 동료 재소자 "검사가 술 따라줬다고 들었다"… 檢 "李 안 마셨다...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:59</td>
+                    <td class='title'>
+                        <a href='https://www.nongmin.com/article/20260617500322' target='_blank'>대구농협·대구교도소 보라미봉사단, 농심천심 범농협 농촌일손 집중 지...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 17:56</td>
+                    <td class='title'>
+                        <a href='https://www.womaneconomy.co.kr/news/articleView.html?idxno=255192' target='_blank'>서금원, 청년미래적금 22일 출시 채비···'3년 목돈'으로 도약 계좌 잇...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:39</td>
+                    <td class='title'>
+                        <a href='https://www.news1.kr/local/gyeonggi/6200237' target='_blank'>"'검사가 술 따라줬다' 100% 들었다"…이화영 동료 재소자 증언</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 15:16</td>
+                    <td class='title'>
+                        <a href='https://www.ohmynews.com/NWS_Web/View/at_pg.aspx?CNTN_CD=A0003243976&CMPT_CD=P0010&utm_source=naver&utm_medium=newsearch&utm_campaign=naver_news' target='_blank'>동료 재소자 "이화영, 검사가 페트병에 담긴 소주 따라줬다고 했다"</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:44</td>
+                    <td class='title'>
+                        <a href='https://www.gukjenews.com/news/articleView.html?idxno=3610745' target='_blank'>대구농협·대구교도소, 달성군 참외농가 일손돕기 봉사 실시</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 14:42</td>
+                    <td class='title'>
+                        <a href='https://www.womaneconomy.co.kr/news/articleView.html?idxno=255162' target='_blank'>현대차 출신 전략통 영입한 카카오뱅크, '포용금융 수출' 승부수 통할까</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:33</td>
+                    <td class='title'>
+                        <a href='https://www.chosun.com/national/court_law/2026/06/17/LOTXGQ2EKRFY5NX7KSLONQHI3E/?utm_source=naver&utm_medium=referral&utm_campaign=naver-news' target='_blank'>“이화영, 검찰 다녀와서 ‘회에 술 마셨다’ 자랑해”... 동료 재소자 ...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 13:32</td>
+                    <td class='title'>
+                        <a href='https://science.ytn.co.kr/program/view.php?mcd=0082&hcd=&key=202606171101011340' target='_blank'>AI가 119 신고 내용 정리...경기도, '생활형 AI' 도입</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 10:34</td>
+                    <td class='title'>
+                        <a href='https://www.ilyosisa.co.kr/news/article.html?no=256471' target='_blank'><단독> ‘민간인 수용 사전 조치’ 국방부 법무관리관실 내란 동조 의혹</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 10:20</td>
+                    <td class='title'>
+                        <a href='http://www.economytalk.kr/news/articleView.html?idxno=422015' target='_blank'>육해공 3군 사관학교 통폐합 … "졸속 추진 중단하라" 호소 성명들</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 09:15</td>
+                    <td class='title'>
+                        <a href='https://www.ytn.co.kr/_ln/0134_202606170915392609' target='_blank'>[자막뉴스] 더 빠르게, 더 쉽게...도민과 함께 만드는 '생활형 AI'</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 07:58</td>
+                    <td class='title'>
+                        <a href='https://www.munhwa.com/article/11596062?ref=naver' target='_blank'>전국 대학 홍보팀, 전문성·CEO 신뢰 높지만 인력·예산 부족에 ‘고군...</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class='time'>06/17 07:02</td>
+                    <td class='title'>
+                        <a href='https://www.businesspost.co.kr/BP?command=article_view&num=439423' target='_blank'>[Who Is ?] 조현 외교부 장관</a>
+                    </td>
+                </tr></table>
+        </div>
+    </div>
+    <div class='footer'>
+        <strong>법무부 AI TF</strong> · 매일 07:00 자동 업데이트<br>
+        기사를 터치하면 원문으로 이동합니다
+    </div>
+</body>
+</html>
