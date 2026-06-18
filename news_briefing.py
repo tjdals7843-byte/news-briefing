@@ -10,11 +10,11 @@ from datetime import datetime, timedelta, timezone
 CHANNELS = [
     {
         "name": "채널1",
-        "topics": ["교도소", "교정청", "교도관", "교정본부"]
+        "topics": ["교도소", "교정청", "교정"]
     },
     {
         "name": "채널2",
-        "topics": ["황민지", "교정청", "교정"]
+        "topics": ["선관위", "교정청", "교정"]
     },
 ]
 # ==========================================
@@ -333,29 +333,29 @@ def send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, pa
     else:
         period_str = f"{start_dt.strftime('%m.%d')} ~ {end_dt.strftime('%m.%d')} 07:00"
 
-    topic_emojis = ["🔵", "🟢", "🟡", "🟠", "🔴"]
+    number_emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
 
     lines = [
-        "╔══════════════════════╗",
-        f"║  📰 {channel_name} 브리핑  ║",
-        "╚══════════════════════╝",
+        f"📰  {channel_name} 브리핑",
         "",
-        f"🗓  {now.strftime('%Y.%m.%d')}  |  {period_str}",
+        f"🗓 {now.strftime('%Y.%m.%d')}",
+        f"⏱ {period_str}",
         "",
-        "─────────────────────────",
+        "▬▬▬▬▬▬▬▬▬▬",
+        "",
     ]
 
     for i, (topic, items) in enumerate(topic_news.items()):
-        emoji = topic_emojis[i % len(topic_emojis)]
-        bar = "█" * min(len(items) // 10 + 1, 8)
-        lines.append(f"{emoji}  {topic}")
-        lines.append(f"    {bar}  {len(items)}건")
+        emoji = number_emojis[i % len(number_emojis)]
+        lines.append(f"{emoji} {topic}   {len(items)}건")
 
     lines += [
-        "─────────────────────────",
-        f"📊  총 {total}건 수집 완료",
         "",
-        "👇  전체 기사 보기",
+        "▬▬▬▬▬▬▬▬▬▬",
+        "",
+        f"📊 총 {total}건 수집 완료",
+        "",
+        "🔗 전체 기사 보기",
         f"{page_url}",
     ]
 
