@@ -13,8 +13,12 @@ CHANNELS = [
         "topics": ["교도소", "교정청", "교도관", "교정본부"]
     },
     {
-        "name": "채널2",
-        "topics": ["선관위", "교정청", "교정"]
+        "name": "교위 강문구의",
+        "topics": ["교도소", "구치소", "교도관", "수용자", "수형자", "재소자", "교정본부", "사형", "무기징역", "가석방", "귀휴"]
+    },
+    {
+        "name": "교감 노세영의",
+        "topics": ["교도소", "구치소", "윤석열", "이화영", "교정 특별사법경찰"]
     },
 ]
 # ==========================================
@@ -333,7 +337,12 @@ def send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, pa
     else:
         period_str = f"{start_dt.strftime('%m.%d')} ~ {end_dt.strftime('%m.%d')} 07:00"
 
-    number_emojis = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣"]
+    number_emojis = [
+        "①", "②", "③", "④", "⑤",
+        "⑥", "⑦", "⑧", "⑨", "⑩",
+        "⑪", "⑫", "⑬", "⑭", "⑮",
+        "⑯", "⑰", "⑱", "⑲", "⑳"
+    ]
 
     lines = [
         f"📰  {channel_name} 브리핑",
@@ -409,7 +418,6 @@ def main():
             topic_news[topic] = items
             print(f"    → {len(items)}건")
 
-        # HTML 파일 생성 (채널별 폴더)
         folder = f"channel{idx + 1}"
         import os as _os
         _os.makedirs(folder, exist_ok=True)
@@ -418,7 +426,6 @@ def main():
             f.write(html)
         print(f"  HTML 생성 완료: {folder}/index.html")
 
-        # 카카오톡 전송
         page_url = f"{base_url}/{folder}/"
         status, result = send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, page_url)
         if status == 200:
