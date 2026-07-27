@@ -11,7 +11,7 @@ from collections import defaultdict
 CHANNELS = [
     {
         "name": "교위 서원진의",
-        "topics": ["교도소", "교정청", "교도관", "교정본부"]
+        "topics": ["교도소", "구치소", "교정청", "교도관", "교정본부"]
     },
     {
         "name": "교위 강문구의",
