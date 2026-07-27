@@ -197,9 +197,6 @@ def generate_html(channel_name, topic_news, start_dt, end_dt):
     total = sum(len(v) for v in topic_news.values())
     period = f"{start_dt.strftime('%m/%d %H:%M')} ~ {end_dt.strftime('%m/%d %H:%M')}"
 
-    number_chars = ["①","②","③","④","⑤","⑥","⑦","⑧","⑨","⑩",
-                    "⑪","⑫","⑬","⑭","⑮","⑯","⑰","⑱","⑲","⑳"]
-
     sections = ""
     for topic, items in topic_news.items():
         if not items:
@@ -211,7 +208,7 @@ def generate_html(channel_name, topic_news, start_dt, end_dt):
             for idx, group in enumerate(groups):
                 rep = group[0]  # 대표 기사
                 related = group[1:]  # 관련 기사
-                num = number_chars[idx] if idx < len(number_chars) else f"({idx+1})"
+                num = f"{idx+1}."
                 group_id = f"g_{topic}_{idx}"
 
                 related_html = ""
@@ -382,13 +379,6 @@ def send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, pa
     else:
         period_str = f"{start_dt.strftime('%m.%d')} ~ {end_dt.strftime('%m.%d')} 07:00"
 
-    number_emojis = [
-        "①", "②", "③", "④", "⑤",
-        "⑥", "⑦", "⑧", "⑨", "⑩",
-        "⑪", "⑫", "⑬", "⑭", "⑮",
-        "⑯", "⑰", "⑱", "⑲", "⑳"
-    ]
-
     lines = [
         f"📰  {channel_name} 브리핑",
         "",
@@ -400,8 +390,7 @@ def send_kakao_text(access_token, channel_name, topic_news, start_dt, end_dt, pa
     ]
 
     for i, (topic, items) in enumerate(topic_news.items()):
-        emoji = number_emojis[i % len(number_emojis)]
-        lines.append(f"{emoji} {topic}   {len(items)}건")
+        lines.append(f"{i+1}. {topic}   {len(items)}건")
 
     lines += [
         "",
